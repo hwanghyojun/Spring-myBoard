@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.myboard.mapper.board_mapper">
+
+	<select id="listPageCriteria" resultType="BoardVO">
+		select *
+		from board_info
+		where b_num > 0
+		order by b_num desc
+		limit #{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="totalCount" resultType="java.lang.Integer">
+		select count(*)
+		from
+		board_info
+	</select>
+	
+	<select id="boardRead" resultType="BoardVO">
+		select *
+		from board_info
+		where b_num = #{b_num}
+	</select>
+	<insert id="boardWrite">
+		insert into board_info
+		(b_title, b_content, b_writer)
+		values(#{title}, #{content}, #{id})
+	</insert>
+	<update id="boardUpdate">
+		update board_info
+		set b_title = #{title},
+		b_content = #{content}
+		where b_num = #{number}
+		and b_writer = #{writer}
+	</update>
+	<delete id="boardDelete">
+		delete from board_info
+		where b_num = #{number}
+		and b_writer = #{writer}
+	</delete>
+	
+	<update id="countHit">
+		update board_info
+		set b_hit = b_hit+1
+		where b_num = #{b_num}
+	</update>
+	<update id="countReply">
+		update board_info
+		set b_reply_count = (select count(b_num) from reply_info where b_num = #{b_num})
+		where b_num = #{b_num}
+	</update>
+
+	<select id="searchBoard" resultType="BoardVO">
+		select *
+		from board_info
+		<if test='search_condition == "all"'>
+		</if>
+		<if test='search_condition == "title"'>
+			where b_title like concat("%",#{search_content},"%")
+		</if>
+		<if test='search_condition == "content"'>
+			where b_content like concat("%",#{search_content},"%")
+		</if>
+		<if test='search_condition == "writer"'>
+			where b_writer like concat("%",#{search_content},"%")
+		</if>
+		order by b_num desc
+		limit #{pageStart}, #{perPageNum}
+	</select>
+
+	<select id="searchTotalCount" resultType="java.lang.Integer">
+		select count(*)
+		from
+		board_info
+		<if test='search_condition == "all"'>
+		</if>
+		<if test='search_condition == "title"'>
+			where b_title like concat("%",#{search_content},"%")
+		</if>
+		<if test='search_condition == "content"'>
+			where b_content like concat("%",#{search_content},"%")
+		</if>
+		<if test='search_condition == "writer"'>
+			where b_writer like concat("%",#{search_content},"%")
+		</if>
+	</select>
+
+	<update id="countRecommend">
+		UPDATE board_info AS b, user_info AS u
+     	SET  b.b_recommend = b_recommend+1,
+              u.u_recommend_active_time = now()
+     	WHERE b.b_num = #{b_num}
+     	AND	u.u_id = #{u_id};
+	</update>
+
+</mapper>

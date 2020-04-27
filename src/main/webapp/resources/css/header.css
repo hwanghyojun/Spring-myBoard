@@ -1,0 +1,17 @@
+.navbar li a {
+	font-size: 16px;
+}
+
+#userImageLi {
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+#searchNav {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+#search_content {
+	width: 400px;
+}

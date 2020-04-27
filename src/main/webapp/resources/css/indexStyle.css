@@ -1,0 +1,75 @@
+body {
+	width: 1202px;
+	margin: 0 auto;
+}
+
+.row {
+	margin: 0;
+}
+
+#bbs th {
+	text-align: center;
+}
+
+#bbsNo {
+	width: 50px;
+}
+
+#bbsNick {
+	width: 100px;
+}
+
+#bbsDate {
+	width: 100px;
+}
+
+#bbsHit {
+	width: 50px;
+}
+
+#bbsReq {
+	width: 50px;
+}
+
+#integratedSearch {
+	width: 400px;
+}
+
+.navbar-default {
+	border: none;
+	background-color: #FFFFFF;
+}
+/* Remove the navbar's default margin-bottom and rounded borders */
+.navbar {
+	border-radius: 0;
+}
+
+/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+.row.content {
+	height: 450px;
+}
+
+/* Set gray background color and 100% height */
+.sidenav {
+	padding-top: 20px;
+	background-color: #FFFFFF;
+	height: 100%;
+}
+
+/* Set black background color, white text and some padding */
+footer {
+	background-color: #555;
+	color: white;
+	padding: 15px;
+}
+
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
+	.sidenav {
+		height: auto;
+		padding: 15px;
+	}
+	.row.content {
+		height: auto;
+	}
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.myboard.mapper.user_mapper">
+	<insert id="signUp" parameterType="java.util.HashMap">
+		insert
+		into user_info
+		(u_id, u_pwd, u_name, u_sex, u_birthday, u_email, u_phone_number)
+		values
+		(#{id}, #{password}, #{name}, #{sex}, #{birthday}, #{email}, #{phone})
+	</insert>
+	
+	<select id="idDupCheck" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(u_id)
+		from user_info
+		where u_id = #{id}
+	</select>
+	
+	<select id="login" parameterType="java.util.HashMap" resultType="com.example.domain.UserVO">
+		select *
+		from user_info
+		where u_id = #{u_id}
+		and u_pwd = #{u_pwd}
+	</select>
+	
+	<update id="loginLatestTimeUpdate">
+		update user_info
+		set u_lastest_login_date = CURRENT_TIMESTAMP
+		where u_id = #{u_id}
+		and u_pwd = #{u_pwd}
+	</update>
+	
+	<update id="updateRecommendActiveTime">
+		update user_info
+		set u_recommend_active_time = TIMESTAMPADD(minute, 1, now())
+		where u_id = #{u_id}
+	</update>
+	
+	<select id="checkRecommendActiveTime" resultType="java.sql.Timestamp">
+		select u_recommend_active_time
+		from user_info
+		where u_id = #{u_id}
+	</select>
+</mapper>
